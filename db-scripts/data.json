@@ -1,17 +1,41 @@
 //connections
 {
-  "requestId":"1",
-  "db1_provider":"postgresql",
-  "db2_provider":"postgresql",
-  "db1_url":"jdbc:postgresql://localhost:5432",
-  "db2_url":"jdbc:postgresql://localhost:5432",
-  "db1_name":"sourcedb",
-  "db2_name":"destdb",
-  "db1_username":"raushan",
-  "db2_username":"raushan",
-  "db1_password":"raushan",
-  "db2_password":"raushan"
+	"requestId":"1",
+	"db1_provider":"postgresql",
+	"db2_provider":"postgresql",
+	"db1_url":"jdbc:postgresql://localhost:5432/sourcedb",
+	"db2_url":"jdbc:postgresql://localhost:5432/destdb",
+	"db1_name":"sourcedb",
+	"db2_name":"destdb",
+	"db1_username":"raushan",
+	"db2_username":"raushan",
+	"db1_password":"raushan",
+	"db2_password":"raushan"
 }
 
 //column mapping
 
+[
+{
+	"requestId":"1",
+	"tbl1_name":"person",
+	"key1_name":"email",
+	"col1_name":"firstname",
+	"col1_type":"character varying(255)",
+	"tbl2_name":"people",
+	"key2_name":"emailId",
+	"col2_name":"fname",
+	"col2_type":"character varying(255)"
+},
+{
+	"requestId":"1",
+	"tbl1_name":"person",
+	"key1_name":"email",
+	"col1_name":"lastname",
+	"col1_type":"character varying(255)",
+	"tbl2_name":"people",
+	"key2_name":"emailId",
+	"col2_name":"lname",
+	"col2_type":"character varying(255)"
+}
+]
