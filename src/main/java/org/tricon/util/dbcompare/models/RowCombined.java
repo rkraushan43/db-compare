@@ -2,20 +2,60 @@ package org.tricon.util.dbcompare.models;
 
 public class RowCombined {
 
+	private String tbl1;
+	
+	private String tbl2;
+	
 	private String key1;
 	
 	private String key2;
-	
-	private String strValue1;
-	
-	private String strValue2;
 	
 	private String col1;
 	
 	private String col2;
 
+	private Object value1;
+	
+	private Object value2;
+	
 	private boolean match;
 	
+	
+	/*@Override
+	public boolean equals(Object o){
+		if(this==o)
+			return true;
+		if(o==null || o.getClass()!=this.getClass())
+			return false;
+		RowCombined r=(RowCombined) o;
+		
+		return (r.key1 !=null && this.key1 !=null && r.col1 !=null && this.col1 !=null && r.key1.equals(this.key1) && r.col1.equals(this.col1));
+	}*/
+	
+	
+	public String getTbl1() {
+	
+		return tbl1;
+	}
+
+	
+	public void setTbl1(String tbl1) {
+	
+		this.tbl1 = tbl1;
+	}
+
+	
+	public String getTbl2() {
+	
+		return tbl2;
+	}
+
+	
+	public void setTbl2(String tbl2) {
+	
+		this.tbl2 = tbl2;
+	}
+
 	public String getKey1() {
 		return key1;
 	}
@@ -32,27 +72,13 @@ public class RowCombined {
 		this.key2 = key2;
 	}
 
-	public String getStrValue1() {
-		return strValue1;
-	}
-
-	public void setStrValue1(String strValue1) {
-		this.strValue1 = strValue1;
-	}
-
-	public String getStrValue2() {
-		return strValue2;
-	}
-
-	public void setStrValue2(String strValue2) {
-		this.strValue2 = strValue2;
-		if(this.key1 !=null && ! this.key1.isEmpty() && this.key2 !=null && ! this.key2.isEmpty() && this.strValue1 !=null  && ! this.strValue1.isEmpty()
-				&& this.strValue2 !=null && ! this.strValue2.isEmpty() && this.key1.equals(this.key2) && this.strValue1.equals(this.strValue2)){
-			match=true;
-		}
-	}
+	
 
 	public boolean isMatch() {
+		if(this.key1 !=null && ! this.key1.isEmpty() && this.key2 !=null && ! this.key2.isEmpty() && this.value1 !=null  
+				&& this.value2 !=null  && this.key1.equals(this.key2) && this.value1.equals(this.value2)){
+			match=true;
+		}
 		return match;
 	}
 
@@ -84,23 +110,52 @@ public class RowCombined {
 		this.col2 = col2;
 	}
 
+	
+	public Object getValue1() {
+	
+		return value1;
+	}
+
+	
+	public void setValue1(Object value) {
+	
+		this.value1 = value;
+	}
+
+	
+	public Object getValue2() {
+	
+		return value2;
+	}
+
+	
+	public void setValue2(Object value2) {
+	
+		this.value2 = value2;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("RowCombined [key1=");
+		builder.append("RowCombined [");
+		builder.append(" tbl1=");
+		builder.append(tbl1);
+		builder.append(" tbl2=");
+		builder.append(tbl2);
+		builder.append(" key1=");
 		builder.append(key1);
 		builder.append(", key2=");
 		builder.append(key2);
-		builder.append(", strValue1=");
-		builder.append(strValue1);
-		builder.append(", strValue2=");
-		builder.append(strValue2);
 		builder.append(", match=");
 		builder.append(match);
 		builder.append(", col1=");
 		builder.append(col1);
 		builder.append(", col2=");
 		builder.append(col2);
+		builder.append(", value1=");
+		builder.append(value1);
+		builder.append(", value2=");
+		builder.append(value2);
 		builder.append("]");
 		return builder.toString();
 	}

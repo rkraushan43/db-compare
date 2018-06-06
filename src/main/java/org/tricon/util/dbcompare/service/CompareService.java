@@ -46,39 +46,25 @@ public class CompareService {
 		
 		DataSource ds2	=connect.getDataSource(con.getDb2_url(), con.getDb2_provider(), con.getDb2_username(), con.getDb2_password());
 		
-		//_LOGGER.info("ds1: {}, ds2: {}",ds1,ds2);
-
 		List<ColumnMapping> mappings= mappingRepository.findByRequestId(requestid);
 		
-		Map<String,RowCombined> allRowsMap=new HashMap<String,RowCombined>();
+		Map<String,RowCombined> allRowsMap=null;
 		RowCombined rc;
-		List<RowCombined> filteredList=null;
+		List<RowCombined> filteredList=new ArrayList<RowCombined>();
 		for (ColumnMapping mapping : mappings) {
 			_LOGGER.info(mapping.toString());
 			String q1="select "+mapping.getKey1_name()+ " , "+mapping.getCol1_name()+" from "+ mapping.getTbl1_name();
 			String q2="select "+mapping.getKey2_name()+ " , "+mapping.getCol2_name()+" from "+ mapping.getTbl2_name();
 			try {
+				allRowsMap=new HashMap<String,RowCombined>();
 				ResultSet rs1=ds1.getConnection().prepareStatement(q1).executeQuery();
 				ResultSet rs2=ds2.getConnection().prepareStatement(q2).executeQuery();
-				while(rs1.next()){
-					rc=new RowCombined();
-					rc.setKey1(rs1.getString(mapping.getKey1_name()));
-					rc.setStrValue1(rs1.getString(mapping.getCol1_name()));
-					rc.setCol1(mapping.getCol1_name());
-					allRowsMap.put(rc.getKey1(), rc);
-				}
-				while(rs2.next()){
-					rc=allRowsMap.get(rs2.getString(mapping.getKey2_name()));
-					rc.setKey2(rs2.getString(mapping.getKey2_name()));
-					rc.setStrValue2(rs2.getString(mapping.getCol2_name()));
-					rc.setCol2(mapping.getCol2_name());
-				}
-				
+				populateRowMapping(rs1, rs2, mapping, allRowsMap);
 				List<RowCombined> allRows=new ArrayList<RowCombined>(allRowsMap.values());
-				filteredList=allRows.stream().filter(row -> !row.isMatch()).collect(Collectors.toList());
-				for(RowCombined r:filteredList){
+				filteredList.addAll(allRows.stream().filter(row -> !row.isMatch()).collect(Collectors.toList()));
+				/*for(RowCombined r:filteredList){
 					_LOGGER.info(r.toString());
-				}
+				}*/
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -86,8 +72,47 @@ public class CompareService {
 			}
 		}
 		return filteredList;
-	
-	
-		
+	}
+	private void populateRowMapping(ResultSet rs1,ResultSet rs2,ColumnMapping mapping,Map<String,RowCombined> allRowsMap) throws SQLException{
+		RowCombined rc=null;
+		while(rs1.next()){
+			rc=new RowCombined();
+			rc.setTbl1(mapping.getTbl1_name());
+			rc.setTbl2(mapping.getTbl2_name());
+			rc.setKey1(rs1.getString(mapping.getKey1_name()));
+			rc.setCol1(mapping.getCol1_name());
+			rc.setValue1(getValue(rs1, mapping.getCol1_name(),mapping.getCol1_type()));
+			allRowsMap.put(rc.getKey1(), rc);
+		}
+		while(rs2.next()){
+			rc=allRowsMap.get(rs2.getString(mapping.getKey2_name()));
+			rc.setKey2(rs2.getString(mapping.getKey2_name()));
+			rc.setValue2(getValue(rs2, mapping.getCol2_name(),mapping.getCol2_type()));
+			rc.setCol2(mapping.getCol2_name());
+		}
+	}
+	private Object getValue(ResultSet rs,String fieldName,String fieldType)  throws SQLException{
+		Object o=null;
+		switch(fieldType.toLowerCase()){
+		case "string":
+			o=rs.getString(fieldName);
+			break;
+		case "integer":
+			o=rs.getInt(fieldName);
+			break;
+		case "boolean":
+			o=rs.getBoolean(fieldName);
+			break;
+		case "date":
+			o=rs.getDate(fieldName);
+			break;
+		case "object":
+			o=rs.getObject(fieldName);
+			break;
+		default :
+			o=rs.getObject(fieldName);
+			break;
+		}
+		return o;
 	}
 }

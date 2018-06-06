@@ -21,21 +21,98 @@
 	"tbl1_name":"person",
 	"key1_name":"email",
 	"col1_name":"firstname",
-	"col1_type":"character varying(255)",
+	"col1_type":"string",
 	"tbl2_name":"people",
 	"key2_name":"emailId",
 	"col2_name":"fname",
-	"col2_type":"character varying(255)"
+	"col2_type":"string"
 },
 {
 	"requestId":"1",
 	"tbl1_name":"person",
 	"key1_name":"email",
 	"col1_name":"lastname",
-	"col1_type":"character varying(255)",
+	"col1_type":"string",
 	"tbl2_name":"people",
 	"key2_name":"emailId",
 	"col2_name":"lname",
-	"col2_type":"character varying(255)"
+	"col2_type":"string"
+},
+{
+	"requestId":"1",
+	"tbl1_name":"organization",
+	"key1_name":"name",
+	"col1_name":"employee_count",
+	"col1_type":"int",
+	"tbl2_name":"org",
+	"key2_name":"name",
+	"col2_name":"employee_count",
+	"col2_type":"int"
+},
+{
+	"requestId":"1",
+	"tbl1_name":"organization",
+	"key1_name":"name",
+	"col1_name":"startdate",
+	"col1_type":"date",
+	"tbl2_name":"org_detail",
+	"key2_name":"name",
+	"col2_name":"startdate",
+	"col2_type":"date"
+},
+{
+	"requestId":"1",
+	"tbl1_name":"organization",
+	"key1_name":"name",
+	"col1_name":"revenue",
+	"col1_type":"bigint",
+	"tbl2_name":"org_detail",
+	"key2_name":"name",
+	"col2_name":"revenue",
+	"col2_type":"bigint"
+},
+{
+	"requestId":"1",
+	"tbl1_name":"emp",
+	"key1_name":"name",
+	"col1_name":"address",
+	"col1_type":"string",
+	"tbl2_name":"emp_info",
+	"key2_name":"name",
+	"col2_name":"address",
+	"col2_type":"string"
+},
+{
+	"requestId":"1",
+	"tbl1_name":"emp_info",
+	"key1_name":"name",
+	"col1_name":"prj_name",
+	"col1_type":"string",
+	"tbl2_name":"emp_info",
+	"key2_name":"name",
+	"col2_name":"prj_name",
+	"col2_type":"bigint"
+},
+{
+	"requestId":"1",
+	"tbl1_name":"emp_info",
+	"key1_name":"name",
+	"col1_name":"salary",
+	"col1_type":"int",
+	"tbl2_name":"emp_info",
+	"key2_name":"name",
+	"col2_name":"salary",
+	"col2_type":"int"
+},
+{
+	"requestId":"1",
+	"tbl1_name":"emp_info",
+	"key1_name":"name",
+	"col1_name":"dob",
+	"col1_type":"date",
+	"tbl2_name":"emp_info",
+	"key2_name":"name",
+	"col2_name":"dob",
+	"col2_type":"date"
 }
 ]
