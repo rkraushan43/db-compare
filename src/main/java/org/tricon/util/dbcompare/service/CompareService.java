@@ -52,7 +52,7 @@ public class CompareService {
 		RowCombined rc;
 		List<RowCombined> filteredList=new ArrayList<RowCombined>();
 		for (ColumnMapping mapping : mappings) {
-			_LOGGER.info(mapping.toString());
+			_LOGGER.debug(mapping.toString());
 			String q1="select "+mapping.getKey1_name()+ " , "+mapping.getCol1_name()+" from "+ mapping.getTbl1_name();
 			String q2="select "+mapping.getKey2_name()+ " , "+mapping.getCol2_name()+" from "+ mapping.getTbl2_name();
 			try {
@@ -62,9 +62,6 @@ public class CompareService {
 				populateRowMapping(rs1, rs2, mapping, allRowsMap);
 				List<RowCombined> allRows=new ArrayList<RowCombined>(allRowsMap.values());
 				filteredList.addAll(allRows.stream().filter(row -> !row.isMatch()).collect(Collectors.toList()));
-				/*for(RowCombined r:filteredList){
-					_LOGGER.info(r.toString());
-				}*/
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
