@@ -49,7 +49,6 @@ public class CompareService {
 		List<ColumnMapping> mappings= mappingRepository.findByRequestId(requestid);
 		
 		Map<String,RowCombined> allRowsMap=null;
-		RowCombined rc;
 		List<RowCombined> filteredList=new ArrayList<RowCombined>();
 		for (ColumnMapping mapping : mappings) {
 			_LOGGER.debug(mapping.toString());
@@ -61,7 +60,7 @@ public class CompareService {
 				ResultSet rs2=ds2.getConnection().prepareStatement(q2).executeQuery();
 				populateRowMapping(rs1, rs2, mapping, allRowsMap);
 				List<RowCombined> allRows=new ArrayList<RowCombined>(allRowsMap.values());
-				filteredList.addAll(allRows.stream().filter(row -> !row.isMatch()).collect(Collectors.toList()));
+				filteredList.addAll(allRows.parallelStream().filter(row -> !row.isMatch()).collect(Collectors.toList()));
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
